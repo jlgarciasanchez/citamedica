@@ -1,0 +1,14 @@
+CREATE SCHEMA cdcol; 
+USE `cdcol`;
+/*Table structure for table `user_details` */
+DROP TABLE IF EXISTS `user_details`;
+CREATE TABLE `user_details` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `dob` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+insert  into `user_details`(`id`,`first_name`,`last_name`,`email`,`dob`) values (7,'Soumitra','Roy','contact@roytuts.com','30-08-1986'),(8,'Souvik','Sanyal','souvik.sanyal@email.com','30-09-1991');
