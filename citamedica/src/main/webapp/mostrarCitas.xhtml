@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>CitaMedica</title>s
+</h:head>
+<h:body>
+
+<h:form>     
+	<p:defaultCommand target="login" />
+    <p:toolbar>
+        <f:facet name="left">
+            <p:commandButton value="Clientes" action="#{clienteBean.toMostrarClientes}" update="@all"/>
+            <p:commandButton value="Citas" action="#{citaBean.toMostrarCitas}" update="@all" style="background-color:white"/>
+        </f:facet>
+ 
+        <f:facet name="right">
+        	<p:outputLabel value="Usuario o contraseña incorrecta." style="color:red" rendered="#{usuarioBean.error}"/>
+        	<p:inputText value="#{usuarioBean.user}" rendered="#{usuarioBean.usuario == null}"/>
+        	<p:password value="#{usuarioBean.pass}" rendered="#{usuarioBean.usuario == null}"/>
+            <p:commandButton id ="login" value="Login" action="#{usuarioBean.login}" update="@all" rendered="#{usuarioBean.usuario == null}"/>
+            
+            <p:outputLabel value="#{usuarioBean.usuario.user}" rendered="#{usuarioBean.usuario != null}"/>
+        	<p:commandButton value="Logout" action="#{usuarioBean.logout}" update="@all" rendered="#{usuarioBean.usuario != null}" style="margin-left:1rem"/>
+        </f:facet>
+ 
+    </p:toolbar>
+</h:form>
+
+<div style="text-align:center">
+	<h2>Listado de citas</h2>
+	<h:form style="margin-top:3rem">
+			<p:outputLabel value="Desde:" />
+			<p:datePicker value="#{citaBean.desdeFilter}" style="margin-left:1rem"/>
+			
+			<p:outputLabel value="Hasta:" />
+			<p:datePicker value="#{citaBean.hastaFilter}" style="margin-left:1rem"/>
+			
+			<p:outputLabel value="Cliente:" style="margin-left:1rem"/>
+			<p:inputText value="#{citaBean.clienteFilter}" style="margin-left:1rem"/>
+			
+	<p:commandButton value="Filtrar" action="#{citaBean.filtrarCitas}" style="margin-left:1rem" update="@all"/>
+	<p:commandButton value="Exportar" action="#{citaBean.exportarExel}" style="margin-left:1rem" ajax="false"/>
+	</h:form>
+	<h:form style="margin-top:3rem">
+		<p:dataTable value="#{citaBean.citasList}" var="cita" rows="10" paginator="true"
+		 style="width:80%;margin-left: 10%">
+			<p:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{cita.id}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Contrato</f:facet>
+				<h:outputText value="#{cita.cliente.id}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Fecha</f:facet>
+				<h:outputText value="#{cita.fechaStr}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Hora</f:facet>
+				<h:outputText value="#{cita.horaStr}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Numero de visitas previstas</f:facet>
+				<h:outputText value="#{cita.numeroVisitasPrevistas}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Numero de visitas realizadas</f:facet>
+				<h:outputText value="#{cita.numeroVisitasRealizadas}" />
+			</p:column>
+			<p:column rendered="#{usuarioBean.reserva}">
+				<p:commandButton value="Modificar" action="#{citaBean.toAddCita}"  disabled="#{cita.numeroVisitasRealizadas != null}">
+					<f:param name="id" value="#{cita.id}" />
+					<f:param name="edit" value="true" />
+				</p:commandButton>
+			</p:column>
+			<p:column rendered="#{usuarioBean.medico}">
+				<p:commandButton value="Realizar" action="#{citaBean.toAddCita}">
+					<f:param name="id" value="#{cita.id}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</div>
+</h:body>
+</html>
