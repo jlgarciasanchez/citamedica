@@ -24,7 +24,7 @@
 		<!-- load hibernate configuration file -->
 		<property name="configLocation" value="/WEB-INF/hibernate.cfg.xml" />
 		<!-- where to find the ORM classes -->
-		<property name="packagesToScan" value="curso.model" />
+		<property name="packagesToScan" value="citamedica.model" />
 	</bean>
 	<!-- Transaction manager -->
 	<bean id="transactionManager"
@@ -32,7 +32,11 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- service -->
-	<bean id="clienteService" class="curso.model.service.implementation.ClienteServiceImpl" />
+	<bean id="clienteService" class="citamedica.model.service.implementation.ClienteServiceImpl" />
+	<bean id="citaService" class="citamedica.model.service.implementation.CitaServiceImpl" />
+	<bean id="usuarioService" class="citamedica.model.service.implementation.UsuarioServiceImpl" />
 	<!-- dao -->
-	<bean id="clienteDao" class="curso.model.dao.implementation.ClienteDaoImpl" />
+	<bean id="clienteDao" class="citamedica.model.dao.implementation.ClienteDaoImpl" />
+	<bean id="citaDao" class="citamedica.model.dao.implementation.CitaDaoImpl" />
+	<bean id="usuarioDao" class="citamedica.model.dao.implementation.UsuarioDaoImpl" />
 </beans>

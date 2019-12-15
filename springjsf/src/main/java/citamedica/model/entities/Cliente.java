@@ -1,11 +1,13 @@
-package curso.model.entities;
+package citamedica.model.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +18,8 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column()
-	@GeneratedValue
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	@Column(name = "razon_social", length = 200)
 	String razonSocial;
@@ -92,12 +94,23 @@ public class Cliente implements Serializable{
 	public Date getInicioContrato() {
 		return inicioContrato;
 	}
+	public String getInicioContratoStr() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String strDate = formatter.format(inicioContrato);
+		return strDate;
+	}
 	public void setInicioContrato(Date inicioContrato) {
 		this.inicioContrato = inicioContrato;
 	}
 	public Date getFinContrato() {
 		return finContrato;
 	}
+	public String getFinContratoStr() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String strDate = formatter.format(finContrato);
+		return strDate;
+	}
+
 	public void setFinContrato(Date finContrato) {
 		this.finContrato = finContrato;
 	}
